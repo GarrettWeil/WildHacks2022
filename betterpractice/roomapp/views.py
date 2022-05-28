@@ -79,12 +79,12 @@ def checkin(request):
     room = PracticeRoom.objects.get(room_name__exact=request.POST['room'])
     last_checkout = Checkin.objects.filter(room=room).order_by('-checkout_time').first()
 
-    if last_checkout.checkout_time > datetime.now():
-        last_checkout.checkout_time = datetime.now()
+    if last_checkout.checkout_time > datetime.now(timezone.cst):
+        last_checkout.checkout_time = datetime.now(timezone.cst)
         last_checkout.save()
 
-    new_checkin = Checkin.objects.create(user=actualUser, room=room, checkin_time=datetime.now(),
-                                         checkout_time=datetime.now() + timedelta(hours=checkin_period))
+    new_checkin = Checkin.objects.create(user=actualUser, room=room, checkin_time=datetime.now(timezone.cst),
+                                         checkout_time=datetime.now(timezone.cst) + timedelta(hours=checkin_period))
 
     return HttpResponse("Checkin request sent")
 
@@ -102,7 +102,7 @@ def checkout(request):
     room = PracticeRoom.objects.get(room_name__exact=request.POST['room'])
     updated_checkout = Checkin.objects.filter(room=room).order_by('-checkin_time').first()
 
-    updated_checkout.checkout_time = datetime.now()
+    updated_checkout.checkout_time = datetime.now(timezone.cst)
     updated_checkout.save()
 
     return HttpResponse("Checkout request sent")
