@@ -54,6 +54,30 @@ def checkin(request):
                                          checkin_time=datetime.now(), \
                                          checkout_time = datetime.now() + timedelta(hours=24))
 
+
     return HttpResponse("Checkin request sent")
+
+@csrf_exempt
+def checkout(request):
+
+    if request.method != 'POST':
+        return HttpResponse(status=400)
+    user_token = request.headers['Authorization']
+    user_netid = User.get_netid_from_token(user_token)
+    try:
+        actualUser = User.objects.get(netid__exact=user_netid)
+    except User.DoesNotExist:
+        return HttpResponse(status=404)
+
+    updated_checkout = Checkin.objects.filter(room_name__exact=request.POST['room']).orderby('-checkin_time')
+
+    updated_checkout.checkout_time = datetime.now()
+    updated_checkout.save()
+
+    return HttpResponse("Checkout request sent")
+
+
+
+
 
 
