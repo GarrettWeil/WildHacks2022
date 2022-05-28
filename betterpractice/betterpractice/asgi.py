@@ -1,5 +1,5 @@
 """
-ASGI config for betterpracticeproject project.
+ASGI config for betterpractice project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'betterpracticeproject.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'betterpractice.settings')
 
 application = get_asgi_application()
