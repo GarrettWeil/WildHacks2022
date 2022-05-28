@@ -10,6 +10,7 @@ from django.utils import timezone
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from django.shortcuts import redirect
 from sendgrid.helpers.mail import To
 
 def index(request):
@@ -99,5 +100,19 @@ def checkout(request):
     updated_checkout.save()
 
     return HttpResponse("Checkout request sent")
+
+
+@csrf_exempt
+def login(request):
+    if request.method != 'POST':
+        return HttpResponse(status=400)
+    # print(request.POST)
+    netid = request.POST['callback_0']
+    userexist = User.objects.filter(netid=netid).exists()
+    return redirect(f"/static/main.html?userexist={userexist}&token={netid}")
+
+
+
+
 
 
