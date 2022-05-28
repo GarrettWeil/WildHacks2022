@@ -77,7 +77,7 @@ def checkin(request):
     checkin_period = 24
 
     room = PracticeRoom.objects.get(room_name__exact=request.POST['room'])
-    last_checkout = Checkin.objects.filter(room=room).order_by('-checkout_time').get(id=1)
+    last_checkout = Checkin.objects.filter(room=room).order_by('-checkout_time').first()
 
     if last_checkout.checkout_time > datetime.now():
         last_checkout.checkout_time = datetime.now()
@@ -100,7 +100,7 @@ def checkout(request):
     except User.DoesNotExist:
         return HttpResponse(status=404)
     room = PracticeRoom.objects.get(room_name__exact=request.POST['room'])
-    updated_checkout = (Checkin.objects.filter(room=room).order_by('-checkin_time'))[0]
+    updated_checkout = Checkin.objects.filter(room=room).order_by('-checkin_time').first()
 
     updated_checkout.checkout_time = datetime.now()
     updated_checkout.save()
