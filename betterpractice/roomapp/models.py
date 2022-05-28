@@ -6,7 +6,6 @@ class User(models.Model):
     email = models.EmailField()
 
 
-
 class PracticeRoom(models.Model):
     room_name = models.CharField(max_length=200)
 
