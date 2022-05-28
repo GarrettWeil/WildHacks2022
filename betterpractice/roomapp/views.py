@@ -27,13 +27,15 @@ def notifyCovid(request):
     covid_period = 72
     last_date = timezone.now() - timedelta(hours=covid_period)
     check_ins = Checkin.objects.filter(user=actualUser, checkout_time__range=(last_date, timezone.now()))
-    users = []
+    users = set()
     for checkin in check_ins:
         checkout_time = checkin.checkout_time
         room = checkin.room
-        other_ppl = Checkin.objects.filter(room=room)
-
-
+        other_checkins = Checkin.objects.filter(room=room, checkin_time__gt=checkout_time)
+        for othercheckin in other_checkins:
+            users.add(othercheckin.user)
+    users = list(users)
+    print(users[0].email)
     return HttpResponse(actualUser.email)
 
 @csrf_exempt
