@@ -7,7 +7,6 @@ mapboxgl.accessToken =
 
 const Map = () => {
   const mapContainerRef = useRef(null);
-
   const [lng, setLng] = useState(5);
   const [lat, setLat] = useState(34);
   const [zoom, setZoom] = useState(1.5);
@@ -20,6 +19,19 @@ const Map = () => {
       center: [lng, lat],
       zoom: zoom
     });
+
+    map.fitBounds([
+    [-87.6818, 42.0485], // southwestern corner of the bounds
+    [-87.6679, 42.0625] // northeastern corner of the bounds
+    ]);
+
+    const bienen = new mapboxgl.Marker().setLngLat([-87.6715, 42.0519]).addTo(map);
+    const elder = new mapboxgl.Marker().setLngLat([-87.67788796493683, 42.06126750075559]).addTo(map);
+    const shep = new mapboxgl.Marker().setLngLat([-87.67890421555978, 42.05105751307834]).addTo(map);
+    const willard = new mapboxgl.Marker().setLngLat([-87.6811524505949, 42.051683857238636]).addTo(map);
+    const plex = new mapboxgl.Marker().setLngLat([-87.67865989407854, 42.0529281931598]).addTo(map);
+    const chapin = new mapboxgl.Marker().setLngLat([-87.68130238318464, 42.0511357886299]).addTo(map);
+    const slivka = new mapboxgl.Marker().setLngLat([-87.675732321229, 42.06055290140624]).addTo(map);
 
     // Add navigation control (the +/- zoom buttons)
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
@@ -34,13 +46,9 @@ const Map = () => {
     return () => map.remove();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+
   return (
     <div>
-      <div className='sidebarStyle'>
-        <div>
-          Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-        </div>
-      </div>
       <div className='map-container' ref={mapContainerRef} />
     </div>
   );
