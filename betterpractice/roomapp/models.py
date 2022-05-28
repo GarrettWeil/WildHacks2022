@@ -2,7 +2,6 @@ from django.db import models
 import datetime
 
 
-
 class User(models.Model):
     netid = models.CharField(max_length=200, primary_key=True)
     email = models.EmailField()
