@@ -73,11 +73,22 @@ def checkin(request):
     except User.DoesNotExist:
         return HttpResponse(status=404)
 
+    checkin_period = 24
+
+
     room = PracticeRoom.objects.get(room_name__exact = request.POST['room'])
+    last_checkout = Checkin.objects.filter(room=room).order_by('-checkout_time').get(id=1)
+
+    if(last_checkout.checkout_time > datetime.now()):
+        last_checkout.checkout_time = datetime.now()
+        last_checkout.save()
+
+
+
     new_checkin = Checkin.objects.create(user=actualUser, \
                                          room=room, \
                                          checkin_time=datetime.now(), \
-                                         checkout_time = datetime.now() + timedelta(hours=24))
+                                         checkout_time = datetime.now() + timedelta(hours=checkin_period))
 
 
     return HttpResponse("Checkin request sent")
