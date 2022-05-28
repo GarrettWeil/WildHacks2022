@@ -78,10 +78,10 @@ def checkin(request):
     room = PracticeRoom.objects.get(room_name__exact = request.POST['room'])
     last_checkout = Checkin.objects.filter(room=room).order_by('-checkout_time').get(id=1)
 
-    if(last_checkout.checkout_time <= datetime.now()):
+    if(last_checkout.checkout_time > datetime.now()):
         last_checkout.checkout_time = datetime.now()
         last_checkout.save()
-        
+
 
 
     new_checkin = Checkin.objects.create(user=actualUser, \
