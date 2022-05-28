@@ -7,6 +7,11 @@ from .models import Checkin, PracticeRoom
 from datetime import datetime, timedelta
 from django.utils import timezone
 
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from sendgrid.helpers.mail import To
+
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
@@ -35,7 +40,24 @@ def notifyCovid(request):
         for othercheckin in other_checkins:
             users.add(othercheckin.user)
     users = list(users)
-    print(users[0].email)
+    user_emails = list(map(lambda user: user.email, users))
+
+    message = Mail(
+        from_email='peterzhong2023@u.northwestern.edu',
+        to_emails=user_emails,
+        subject='Covid Notification From Better Practice',
+        html_content='<strong>Our records indicate that you have used a practice room '
+                     'recently occupied by another student who tested positive. </strong>',
+        is_multiple=True)
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
+
     return HttpResponse(actualUser.email)
 
 @csrf_exempt
@@ -70,16 +92,12 @@ def checkout(request):
         actualUser = User.objects.get(netid__exact=user_netid)
     except User.DoesNotExist:
         return HttpResponse(status=404)
-
-    updated_checkout = Checkin.objects.filter(room_name__exact=request.POST['room']).orderby('-checkin_time')
+    room = PracticeRoom.objects.get(room_name__exact=request.POST['room'])
+    updated_checkout = (Checkin.objects.filter(room=room).order_by('-checkin_time'))[0]
 
     updated_checkout.checkout_time = datetime.now()
     updated_checkout.save()
 
     return HttpResponse("Checkout request sent")
-
-
-
-
 
 
