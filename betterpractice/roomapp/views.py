@@ -13,6 +13,7 @@ from sendgrid.helpers.mail import Mail
 from django.shortcuts import redirect
 from sendgrid.helpers.mail import To
 
+
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
@@ -61,9 +62,9 @@ def notifyCovid(request):
 
     return HttpResponse(actualUser.email)
 
+
 @csrf_exempt
 def checkin(request):
-
     if request.method != 'POST':
         return HttpResponse(status=400)
     user_token = request.headers['Authorization']
@@ -75,27 +76,21 @@ def checkin(request):
 
     checkin_period = 24
 
-
-    room = PracticeRoom.objects.get(room_name__exact = request.POST['room'])
+    room = PracticeRoom.objects.get(room_name__exact=request.POST['room'])
     last_checkout = Checkin.objects.filter(room=room).order_by('-checkout_time').get(id=1)
 
-    if(last_checkout.checkout_time > datetime.now()):
+    if last_checkout.checkout_time > datetime.now():
         last_checkout.checkout_time = datetime.now()
         last_checkout.save()
 
-
-
-    new_checkin = Checkin.objects.create(user=actualUser, \
-                                         room=room, \
-                                         checkin_time=datetime.now(), \
-                                         checkout_time = datetime.now() + timedelta(hours=checkin_period))
-
+    new_checkin = Checkin.objects.create(user=actualUser, room=room, checkin_time=datetime.now(),
+                                         checkout_time=datetime.now() + timedelta(hours=checkin_period))
 
     return HttpResponse("Checkin request sent")
 
+
 @csrf_exempt
 def checkout(request):
-
     if request.method != 'POST':
         return HttpResponse(status=400)
     user_token = request.headers['Authorization']
@@ -121,9 +116,3 @@ def login(request):
     netid = request.POST['callback_0']
     userexist = User.objects.filter(netid=netid).exists()
     return redirect(f"/static/main.html?userexist={userexist}&token={netid}")
-
-
-
-
-
-
