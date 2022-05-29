@@ -153,3 +153,5 @@ GitHub.sublime-settings
 .history
 .DS_Store
 .DS_Store
+
+betterpractice/roomapp/migrations/0001_initial.py
