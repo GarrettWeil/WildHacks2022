@@ -11,7 +11,7 @@ class User(models.Model):
         return token
 
 class PracticeRoom(models.Model):
-    room_name = models.CharField(max_length=200)
+    room_name = models.CharField(max_length=200, primary_key=True)
 
 
 class Checkin(models.Model):

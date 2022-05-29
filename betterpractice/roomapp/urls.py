@@ -7,5 +7,6 @@ urlpatterns = [
     path('/covid', views.notifyCovid),
     path('/checkin', views.checkin),
     path('/checkout', views.checkout),
-    path('/login', views.login)
+    path('/login', views.login),
+    path('/bulkroomstatus', views.bulk_room_status)
 ]

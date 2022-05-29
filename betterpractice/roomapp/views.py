@@ -1,3 +1,4 @@
+from django.db.models import Max
 from django.shortcuts import render
 
 # Create your views here.
@@ -11,7 +12,7 @@ import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from django.shortcuts import redirect
-from sendgrid.helpers.mail import To
+import json
 
 
 def index(request):
@@ -79,12 +80,12 @@ def checkin(request):
     room = PracticeRoom.objects.get(room_name__exact=request.POST['room'])
     last_checkout = Checkin.objects.filter(room=room).order_by('-checkout_time').first()
 
-    if last_checkout.checkout_time > datetime.now(timezone.cst):
-        last_checkout.checkout_time = datetime.now(timezone.cst)
+    if last_checkout is not None and last_checkout.checkout_time > timezone.now():
+        last_checkout.checkout_time = timezone.now()
         last_checkout.save()
 
-    new_checkin = Checkin.objects.create(user=actualUser, room=room, checkin_time=datetime.now(timezone.cst),
-                                         checkout_time=datetime.now(timezone.cst) + timedelta(hours=checkin_period))
+    new_checkin = Checkin.objects.create(user=actualUser, room=room, checkin_time=timezone.now(),
+                                         checkout_time=timezone.now()+ timedelta(hours=checkin_period))
 
     return HttpResponse("Checkin request sent")
 
@@ -102,7 +103,7 @@ def checkout(request):
     room = PracticeRoom.objects.get(room_name__exact=request.POST['room'])
     updated_checkout = Checkin.objects.filter(room=room).order_by('-checkin_time').first()
 
-    updated_checkout.checkout_time = datetime.now(timezone.cst)
+    updated_checkout.checkout_time = timezone.now()
     updated_checkout.save()
 
     return HttpResponse("Checkout request sent")
@@ -116,3 +117,27 @@ def login(request):
     netid = request.POST['callback_0']
     userexist = User.objects.filter(netid=netid).exists()
     return redirect(f"/static/main.html?userexist={userexist}&token={netid}")
+
+
+@csrf_exempt
+def bulk_room_status(request):
+    rooms_raw = request.body.decode('utf-8')
+    rooms = json.loads(rooms_raw)
+    practiceRooms = PracticeRoom.objects.filter(room_name__in=rooms)
+    checkins = Checkin.objects.values("room__room_name").annotate(time=Max('checkout_time'))
+    room_status = {}
+    for room in rooms:
+        room_status[room] = 'NeverBooked'
+    for checkin in checkins:
+        room_status[checkin['room__room_name']] = checkin['time']
+    from django.core.serializers.json import DjangoJSONEncoder
+    return HttpResponse(json.dumps(room_status, cls=DjangoJSONEncoder))
+
+
+
+
+
+
+# Checkin.objects.values("room__room_name").annotate(time=Max('checkout_time')).first()
+
+# {'room__room_name': 'room1', 'time': datetime.datetime(2022, 5, 28, 23, 5, 11, 951686, tzinfo=datetime.timezone.utc)}
