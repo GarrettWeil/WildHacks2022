@@ -7,6 +7,27 @@
   <body>
 
   <button onclick="location.href = 'mapview.html';" id="myButton" class="float-left submit-button" >I have COVID</button>
+
+  <button onclick="function checkin() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let formData = new FormData(document.getElementById('email-form'));
+      let email = formData.get('email');
+      fetch('http://localhost:8000/roomapp/covid',
+          {
+              method: 'POST',
+              cache: 'no-cache',
+              headers: {'Content-Type': 'application/json', 'Authorization': urlParams.get('token')},
+
+          }
+      ).then(_ => window.location.href = 'http://localhost:8000/static/main.html');
+  }
+  checkin();" id="myButton" class="float-left submit-button">I have COVID
+  </button>
+
+  <!--   body: JSON.stringify({'room':urlParams.get('room'), 'email': email}) -->
+
+
+
   <button onclick="location.href = 'mapview.html';" id="myButton" class="float-left submit-button" >I do not have COVID</button>
 
 
