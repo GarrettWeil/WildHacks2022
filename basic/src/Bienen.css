@@ -1,0 +1,19 @@
+.marker1 {
+  background-image: url('data:image/jpg;base64,UklGRk4AAABXRUJQVlA4TEEAAAAvLcPDEA8w/zEV8x84zLSR8s7w74gNA4yQRvR/AsL//P+19uxY/Md//Md//Md//Md//Md//Md//Md/ZxT/8z8WAgA=');
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.marker2 {
+  background-image: url('https://www.freeiconspng.com/uploads/red-square-png-14.png');
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.75;
+}
