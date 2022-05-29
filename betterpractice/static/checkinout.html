@@ -1,19 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="utf-8">
-    <title>Checkin Page</title>
-  </head>
-  <body>
+    <title>Check in/out</title>
+</head>
+<body>
+<form id="email-form" >
+    <label for="email">Email:</label><br>
+    <input type="text" id="email" name="email"><br>
+</form>
 
-    <form>
-  <label for="fname">Email:</label><br>
-  <input type="text" id="email" name="email"><br>
-  </form>
-  <button onclick="location.href = 'roomview.html';" id="myButton" class="float-left submit-button" >ACCEPT CHECKIN</button>
-  <button onclick="location.href = 'mapview.html';" id="myButton" class="float-left submit-button" >DECLINE CHECKIN</button>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    if(!urlParams.get("exist"))
+    {
+        document.getElementById("email-form").hidden = true;
+    }
+</script>
 
-  <button>Submit</button>
+<button onclick="function checkin() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let formData = new FormData(document.getElementById('email-form'));
+    let email = formData.get('email');
+    fetch('http://localhost:8000/roomapp/checkin',
+        {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {'Content-Type': 'application/json', 'Authorization': urlParams.get('token')},
+            body: JSON.stringify({'room':urlParams.get('room'), 'email': email})
+        }
+    ).then(_ => window.location.href = 'http://localhost:8000/static/main.html');
+}
+checkin();" id="myButton" class="float-left submit-button">ACCEPT CHECKIN
+</button>
+<button onclick="location.href = 'mapview.html';" id="myButton" class="float-left submit-button">CHECKOUT
+</button>
 
-  </body>
+
+</body>
 </html>
