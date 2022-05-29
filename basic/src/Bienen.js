@@ -6,7 +6,7 @@ import bienen from './bienen.jpeg'
 mapboxgl.accessToken =
   'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
-var dict = {
+var room_to_pos = {
   "room1": [3, 6],
   "room2": [2.4, 4.4],
   "room3": [1.8, 2.8],
@@ -34,7 +34,59 @@ var dict = {
   "room25": [-34, -17.5]
 };
 
+var pos_to_room ={
+  "[3,6]" : "room1" ,
+  "[2.4,4.4]": "room2" ,
+  "[1.8, 2.8]": "room3" ,
+  "[1.2, 1.2]": "room4",
+  "[0.6, -0.4]": "room5",
+  "[0, -2]" : "room6" ,
+  "[-0.6, -3.6]": "room7" ,
+  "[-1.2, -5.2]": "room8" ,
+  "[-1.8, -6.8]": "room9" ,
+  "[-2.4, -8.4]": "room10" ,
+  "[-3, -10]": "room11" ,
+  "[0, -17.5]": "room12" ,
+  "[-2.5, -17.5]": "room13" ,
+  "[-5, -17.5]": "room14" ,
+  "[-7.5, -17.5]": "room15" ,
+  "[-10.2, -17.5]": "room16" ,
+  "[-12.7, -17.5]": "room17" ,
+  "[-15.4, -17.5]": "room18" ,
+  "[-17.9, -17.5]": "room19" ,
+  "[-20.6, -17.5]": "room20" ,
+  "[-23.1, -17.5]": "room21" ,
+  "[-25.8, -17.5]": "room22" ,
+  "[-28.3, -17.5]": "room23" ,
+  "[-31, -17.5]": "room24" ,
+  "[-34, -17.5]": "room25"
+}
 
+ const positions = [[3, 6],
+ [2.4, 4.4],
+ [1.8, 2.8],
+ [1.2, 1.2],
+ [0.6, -0.4],
+ [0, -2],
+ [-0.6, -3.6],
+ [-1.2, -5.2],
+ [-1.8, -6.8],
+ [-2.4, -8.4],
+ [-3, -10],
+ [0, -17.5],
+ [-2.5, -17.5],
+ [-5, -17.5],
+ [-7.5, -17.5],
+ [-10.2, -17.5],
+ [-12.7, -17.5],
+ [-15.4, -17.5],
+ [-17.9, -17.5],
+ [-20.6, -17.5],
+ [-23.1, -17.5],
+ [-25.8, -17.5],
+ [-28.3, -17.5],
+ [-31, -17.5],
+ [-34, -17.5]]
 
 const Map = () => {
   const mapContainerRef = useRef(null);
@@ -103,55 +155,66 @@ const Map = () => {
     var red = document.createElement('div');
     //el.innerHTML = "Bienen";
     red.id = 'marker2';
-    var l1 = new mapboxgl.Marker({color: "green"}).setLngLat([3, 6]).addTo(map);
-
-    var l2 = new mapboxgl.Marker({color: "green"}).setLngLat([2.4, 4.4]).addTo(map);
-
-    var l3 = new mapboxgl.Marker({color: "green"}).setLngLat([1.8, 2.8]).addTo(map);
-
-    var l4 = new mapboxgl.Marker({color: "green"}).setLngLat([1.2, 1.2]).addTo(map);
-    var l5 = new mapboxgl.Marker({color: "green"}).setLngLat([0.6, -0.4]).addTo(map);
-    var l6 = new mapboxgl.Marker({color: "green"}).setLngLat([0, -2]).addTo(map);
-    var l7 = new mapboxgl.Marker({color: "green"}).setLngLat([-0.6, -3.6]).addTo(map);
-    var l8 = new mapboxgl.Marker({color: "green"}).setLngLat([-1.2, -5.2]).addTo(map);
-    var l9 = new mapboxgl.Marker({color: "green"}).setLngLat([-1.8, -6.8]).addTo(map);
-
-    var l10 = new mapboxgl.Marker({color: "green"}).setLngLat([-2.4, -8.4]).addTo(map);
-    var l11 = new mapboxgl.Marker({color: "green"}).setLngLat([-3, -10]).addTo(map);
-
-
-    var m2 = new mapboxgl.Marker({color: "red"}).setLngLat([0, -17.5]).addTo(map);
-
-    var m3 = new mapboxgl.Marker({color: "red"}).setLngLat([-2.5, -17.5]).addTo(map);
-
-    var m4 = new mapboxgl.Marker({color: "red"}).setLngLat([-5, -17.5]).addTo(map);
-
-    var m5 = new mapboxgl.Marker({color: "red"}).setLngLat([-7.5, -17.5]).addTo(map);
-
-    var m6 = new mapboxgl.Marker({color: "red"}).setLngLat([-10.2, -17.5]).addTo(map);
-
-    var m7 = new mapboxgl.Marker({color: "red"}).setLngLat([-12.7, -17.5]).addTo(map);
-
-    var m8 = new mapboxgl.Marker({color: "red"}).setLngLat([-15.4, -17.5]).addTo(map);
-    var m9 = new mapboxgl.Marker({color: "red"}).setLngLat([-17.9, -17.5]).addTo(map);
-    var m10 = new mapboxgl.Marker({color: "red"}).setLngLat([-20.6, -17.5]).addTo(map);
-    var m11 = new mapboxgl.Marker({color: "red"}).setLngLat([-23.1, -17.5]).addTo(map);
-    var m12 = new mapboxgl.Marker({color: "red"}).setLngLat([-25.8, -17.5]).addTo(map);
-    var m13 = new mapboxgl.Marker({color: "red"}).setLngLat([-28.3, -17.5]).addTo(map);
-    var m14 = new mapboxgl.Marker({color: "red"}).setLngLat([-31, -17.5]).addTo(map);
-    var m15 = new mapboxgl.Marker({color: "red"}).setLngLat([-34, -17.5]).addTo(map);
-
-
+    // var l1 = new mapboxgl.Marker({color: "green"}).setLngLat([3, 6]).addTo(map);
+    //
+    // var l2 = new mapboxgl.Marker({color: "green"}).setLngLat([2.4, 4.4]).addTo(map);
+    //
+    // var l3 = new mapboxgl.Marker({color: "green"}).setLngLat([1.8, 2.8]).addTo(map);
+    //
+    // var l4 = new mapboxgl.Marker({color: "green"}).setLngLat([1.2, 1.2]).addTo(map);
+    // var l5 = new mapboxgl.Marker({color: "green"}).setLngLat([0.6, -0.4]).addTo(map);
+    // var l6 = new mapboxgl.Marker({color: "green"}).setLngLat([0, -2]).addTo(map);
+    // var l7 = new mapboxgl.Marker({color: "green"}).setLngLat([-0.6, -3.6]).addTo(map);
+    // var l8 = new mapboxgl.Marker({color: "green"}).setLngLat([-1.2, -5.2]).addTo(map);
+    // var l9 = new mapboxgl.Marker({color: "green"}).setLngLat([-1.8, -6.8]).addTo(map);
+    //
+    // var l10 = new mapboxgl.Marker({color: "green"}).setLngLat([-2.4, -8.4]).addTo(map);
+    // var l11 = new mapboxgl.Marker({color: "green"}).setLngLat([-3, -10]).addTo(map);
+    //
+    //
+    // var m2 = new mapboxgl.Marker({color: "red"}).setLngLat([0, -17.5]).addTo(map);
+    //
+    // var m3 = new mapboxgl.Marker({color: "red"}).setLngLat([-2.5, -17.5]).addTo(map);
+    //
+    // var m4 = new mapboxgl.Marker({color: "red"}).setLngLat([-5, -17.5]).addTo(map);
+    //
+    // var m5 = new mapboxgl.Marker({color: "red"}).setLngLat([-7.5, -17.5]).addTo(map);
+    //
+    // var m6 = new mapboxgl.Marker({color: "red"}).setLngLat([-10.2, -17.5]).addTo(map);
+    //
+    // var m7 = new mapboxgl.Marker({color: "red"}).setLngLat([-12.7, -17.5]).addTo(map);
+    //
+    // var m8 = new mapboxgl.Marker({color: "red"}).setLngLat([-15.4, -17.5]).addTo(map);
+    // var m9 = new mapboxgl.Marker({color: "red"}).setLngLat([-17.9, -17.5]).addTo(map);
+    // var m10 = new mapboxgl.Marker({color: "red"}).setLngLat([-20.6, -17.5]).addTo(map);
+    // var m11 = new mapboxgl.Marker({color: "red"}).setLngLat([-23.1, -17.5]).addTo(map);
+    // var m12 = new mapboxgl.Marker({color: "red"}).setLngLat([-25.8, -17.5]).addTo(map);
+    // var m13 = new mapboxgl.Marker({color: "red"}).setLngLat([-28.3, -17.5]).addTo(map);
+    // var m14 = new mapboxgl.Marker({color: "red"}).setLngLat([-31, -17.5]).addTo(map);
+    // var m15 = new mapboxgl.Marker({color: "red"}).setLngLat([-34, -17.5]).addTo(map);
 
 
+    for (var i = 0; i<positions.length;i++){
+     var marker = new mapboxgl.Marker({
+        color: check_color(pos_to_room[positions[i][0],positions[i][1]]
+           , draggable = false
+    }).setLngLat([positions[i][0],positions[i][1]]).addTo(map);
+    }
 
-
-    //for (var i = 0; i<positions.length;i++){
-    // var marker = new mapboxgl.Marker({
-    //    color: "green"//needs to be mapped , draggable = false
-    //}).setLngLat(positions[i][0],positions[i][1]).addTo(map);
-    //}
-
+    function check_color(room){
+      var time = new Date();
+      if time.getMonth() > cout[room]{
+        return "green"
+      } else if time.getDay()>cout[room]{
+        return "green"
+      } else if time.getHour()>cout[room]{
+        return "green"
+      } else if time.getMinute()>cout[room]{
+        return "green"
+      } else {
+        return "red"
+      }
+    }
     // Clean up on unmount
     return () => map.remove();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
