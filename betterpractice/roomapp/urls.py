@@ -7,6 +7,6 @@ urlpatterns = [
     path('/covid', views.notifyCovid),
     path('/checkin', views.checkin),
     path('/checkout', views.checkout),
-    path('/login', views.login),
+    path('/redirect/<slug:room>/', views.redirect_),
     path('/bulkroomstatus', views.bulk_room_status)
 ]

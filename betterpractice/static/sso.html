@@ -1,58 +1,76 @@
 <!DOCTYPE html>
 <!-- saved from url=(0014)about:internet -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Northwestern SSO</title>
-<link rel="icon" type="image/x-icon" href="https://prd-nusso.it.northwestern.edu/nusso/XUI/themes/northwestern/favicon.ico"><link rel="shortcut icon" type="image/x-icon" href="https://prd-nusso.it.northwestern.edu/nusso/XUI/themes/northwestern/favicon.ico"><link rel="stylesheet" type="text/css" href="./Northwestern SSO_files/northwestern-theme.css"><link rel="stylesheet" type="text/css" href="./Northwestern SSO_files/structure.css"><link rel="stylesheet" type="text/css" href="./Northwestern SSO_files/theme"><link rel="stylesheet" type="text/css" href="./Northwestern SSO_files/structure.css"><link rel="stylesheet" type="text/css" href="./Northwestern SSO_files/bootstrap-3.4.1-custom.css"></head>
+    <link rel="icon" type="image/x-icon"
+          href="https://prd-nusso.it.northwestern.edu/nusso/XUI/themes/northwestern/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon"
+          href="https://prd-nusso.it.northwestern.edu/nusso/XUI/themes/northwestern/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="./Northwestern SSO_files/northwestern-theme.css">
+    <link rel="stylesheet" type="text/css" href="./Northwestern SSO_files/structure.css">
+    <link rel="stylesheet" type="text/css" href="./Northwestern SSO_files/theme">
+    <link rel="stylesheet" type="text/css" href="./Northwestern SSO_files/structure.css">
+    <link rel="stylesheet" type="text/css" href="./Northwestern SSO_files/bootstrap-3.4.1-custom.css">
+</head>
 <!--[if IE 9]>
-    <body style="display:none" class="ie9">
-    <![endif]-->
+<body style="display:none" class="ie9">
+<![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
 
 <body>
-    <!--<![endif]-->
-    <div id="messages" class="clearfix"></div>
-    <div id="wrapper" aria-busy="false"><div id="login-base">
-    <div id="loginBaseLogo" class="main-logo-holder"><img class="main-logo" src="./Northwestern SSO_files/Northwestern_white-01-brnt.svg" width="210px" height="104px" alt="Northwestern">
-</div>
-    <div id="content">
-<div class="container">
+<!--<![endif]-->
+<div id="messages" class="clearfix"></div>
+<div id="wrapper" aria-busy="false">
+    <div id="login-base">
+        <div id="loginBaseLogo" class="main-logo-holder"><img class="main-logo"
+                                                              src="./Northwestern SSO_files/Northwestern_white-01-brnt.svg"
+                                                              width="210px" height="104px" alt="Northwestern">
+        </div>
+        <div id="content">
+            <div class="container">
 
+                <form action="" method="post" class="form login col-sm-6 col-sm-offset-3"
+                      autocomplete="off" id="that-stupid-form">
+                    <fieldset class="row">
 
-    <form action="/roomapp/login" method="post" class="form login col-sm-6 col-sm-offset-3" autocomplete="off" data-stage="">
-        <fieldset class="row">
+                        <div class="form-group">
+                            <!--
+          Copyright 2015-2017 ForgeRock AS. All Rights Reserved
 
-                <div class="form-group">
-                    <!--
-  Copyright 2015-2017 ForgeRock AS. All Rights Reserved
- 
-  Use of this code requires a commercial software license with ForgeRock AS.
-  or with one of its affiliates. All use shall be exclusively subject
-  to such license between the licensee and ForgeRock AS.
--->
-<label class="sr-only separator" for="idToken1">
-    <span>NetID</span>
-</label>
-<input type="text" id="idToken1" name="callback_0" value="" data-validator="required" required="" data-validator-event="keyup" class="form-control input-lg" placeholder="NetID" autofocus="">
+          Use of this code requires a commercial software license with ForgeRock AS.
+          or with one of its affiliates. All use shall be exclusively subject
+          to such license between the licensee and ForgeRock AS.
+        -->
+                            <label class="sr-only separator" for="idToken1">
+                                <span>NetID</span>
+                            </label>
+                            <input type="text" id="idToken1" name="callback_0" value="" data-validator="required"
+                                   required="" data-validator-event="keyup" class="form-control input-lg"
+                                   placeholder="NetID" autofocus="">
 
-                </div>
+                        </div>
 
-                <div class="form-group">
-                    <!--
-  Copyright 2015-2017 ForgeRock AS. All Rights Reserved
- 
-  Use of this code requires a commercial software license with ForgeRock AS.
-  or with one of its affiliates. All use shall be exclusively subject
-  to such license between the licensee and ForgeRock AS.
--->
-<label for="idToken2" class="aria-label sr-only separator">
-    <span>Password</span>
-</label>
-<input type="password" id="idToken2" name="callback_1" class="form-control input-lg" placeholder="Password" value="" data-validator="required" required="" data-validator-event="keyup">
+                        <div class="form-group">
+                            <!--
+          Copyright 2015-2017 ForgeRock AS. All Rights Reserved
 
-                </div>
+          Use of this code requires a commercial software license with ForgeRock AS.
+          or with one of its affiliates. All use shall be exclusively subject
+          to such license between the licensee and ForgeRock AS.
+        -->
+                            <label for="idToken2" class="aria-label sr-only separator">
+                                <span>Password</span>
+                            </label>
+                            <input type="password" id="idToken2" name="callback_1" class="form-control input-lg"
+                                   placeholder="Password" value="" data-validator="required" required=""
+                                   data-validator-event="keyup">
+
+                        </div>
                         <!--
                           Copyright 2015-2017 ForgeRock AS. All Rights Reserved
                          
@@ -62,51 +80,56 @@
                         -->
                         <div class="remember-forgot clearfix">
                             <div class="checkbox pull-left">
-                                <label for="remember"><input type="checkbox" name="loginRemember" id="remember"> Remember my username</label>
+                                <label for="remember"><input type="checkbox" name="loginRemember" id="remember">
+                                    Remember my username</label>
                             </div>
                         </div>
 
-                <div class="form-group">
-                    <!--
-  Copyright 2015-2017 ForgeRock AS. All Rights Reserved
- 
-  Use of this code requires a commercial software license with ForgeRock AS.
-  or with one of its affiliates. All use shall be exclusively subject
-  to such license between the licensee and ForgeRock AS.
--->
-<input id="loginButton_0" name="callback_2" type="submit" role="button" index="0" value="Log in" class="btn btn-lg btn-block btn-uppercase btn-primary">
+                        <div class="form-group">
+                            <!--
+          Copyright 2015-2017 ForgeRock AS. All Rights Reserved
 
-                </div>
+          Use of this code requires a commercial software license with ForgeRock AS.
+          or with one of its affiliates. All use shall be exclusively subject
+          to such license between the licensee and ForgeRock AS.
+        -->
+                            <input id="loginButton_0" name="callback_2" type="submit" role="button" index="0"
+                                   value="Log in" class="btn btn-lg btn-block btn-uppercase btn-primary">
 
-            <!--
-              Copyright 2015-2018 ForgeRock AS. All Rights Reserved
-            
-              Use of this code requires a commercial software license with ForgeRock AS.
-              or with one of its affiliates. All use shall be exclusively subject
-              to such license between the licensee and ForgeRock AS.
-            -->
-            
+                        </div>
 
-        </fieldset>
-    </form>
-</div>
-</div>
-</div>
-</div>
-    <div id="loginHelp">
-        <div class="container-fluid">
-            <div class="row">
-                <ul>
-                    <li id="help"><a href="https://kb.northwestern.edu/62270" target="_blank">Help with login
-                            problems</a></li>
-                    <li id="help"><a href="https://service-status.northwestern.edu/" target="_blank">Status of
-                            Northwestern IT Services</a></li>
-                </ul>
+                        <!--
+                          Copyright 2015-2018 ForgeRock AS. All Rights Reserved
+
+                          Use of this code requires a commercial software license with ForgeRock AS.
+                          or with one of its affiliates. All use shall be exclusively subject
+                          to such license between the licensee and ForgeRock AS.
+                        -->
+
+
+                    </fieldset>
+                </form>
+                <script>
+                    const urlParams = new URLSearchParams(window.location.search);
+                    document.getElementById("that-stupid-form").action = `/roomapp/redirect/${urlParams.get("room")}/`;
+                </script>
             </div>
         </div>
     </div>
-    
+</div>
+<div id="loginHelp">
+    <div class="container-fluid">
+        <div class="row">
+            <ul>
+                <li id="help"><a href="https://kb.northwestern.edu/62270" target="_blank">Help with login
+                    problems</a></li>
+                <li id="help"><a href="https://service-status.northwestern.edu/" target="_blank">Status of
+                    Northwestern IT Services</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 
-
-</body></html>
+</body>
+</html>
