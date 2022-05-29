@@ -110,13 +110,12 @@ def checkout(request):
 
 
 @csrf_exempt
-def login(request):
+def redirect_(request, room):
     if request.method != 'POST':
         return HttpResponse(status=400)
-    # print(request.POST)
     netid = request.POST['callback_0']
     userexist = User.objects.filter(netid=netid).exists()
-    return redirect(f"/static/main.html?userexist={userexist}&token={netid}")
+    return redirect(f"/static/main.html?userexist={userexist}&token={netid}&room={room}")
 
 
 @csrf_exempt
