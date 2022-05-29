@@ -27,7 +27,7 @@ const Map = () => {
 
 
     const popup_bienen = new mapboxgl.Popup().setHTML(
-     '<strong><center>Bienen</center></strong> See <a href="https://github.com/GarrettWeil/WildHacks2022" target="_blank" class="link">Practice Rooms</a>'
+     '<strong><center>Bienen</center></strong> See <a href="http://localhost:8000/static/room.html" target="_blank" class="link">Practice Rooms</a>'
     );
 
     const popup_elder = new mapboxgl.Popup().setHTML(
@@ -87,6 +87,9 @@ const Map = () => {
   return (
     <div>
       <div className='map-container' ref={mapContainerRef} />
+      <a href="http://localhost:8000/static/sso-covid.html" style={{position:"absolute", bottom:0, left:0}}>
+        <img src="http://localhost:8000/static/covid.png" width= "70" height="70" alt="covid logo"/>
+      </a>
     </div>
   );
 };

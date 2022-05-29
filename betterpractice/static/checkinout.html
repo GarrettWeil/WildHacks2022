@@ -12,8 +12,9 @@
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
-    if(urlParams.get("exist") === "True")
+    if(urlParams.get("userexist") === "True")
     {
+        console.log("hellp???")
         document.getElementById("email-form").hidden = true;
     }
 </script>

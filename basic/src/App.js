@@ -5,7 +5,7 @@ import Bienen from './Bienen';
 function App() {
   return (
     <div>
-      <checkin />
+      <Map />
     </div>
   );
 }
