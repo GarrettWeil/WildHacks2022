@@ -12,7 +12,7 @@
 
 <script>
     const urlParams = new URLSearchParams(window.location.search);
-    if(!urlParams.get("exist"))
+    if(urlParams.get("exist") === "True")
     {
         document.getElementById("email-form").hidden = true;
     }
@@ -29,11 +29,24 @@
             headers: {'Content-Type': 'application/json', 'Authorization': urlParams.get('token')},
             body: JSON.stringify({'room':urlParams.get('room'), 'email': email})
         }
-    ).then(_ => window.location.href = 'http://localhost:8000/static/main.html');
+    ).then(_ => window.location.href = 'http://localhost:8000/static/room.html');
 }
 checkin();" id="myButton" class="float-left submit-button">ACCEPT CHECKIN
 </button>
-<button onclick="location.href = 'mapview.html';" id="myButton" class="float-left submit-button">CHECKOUT
+<button onclick="function checkout() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let formData = new FormData(document.getElementById('email-form'));
+    let email = formData.get('email');
+    fetch('http://localhost:8000/roomapp/checkout',
+        {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {'Content-Type': 'application/json', 'Authorization': urlParams.get('token')},
+            body: JSON.stringify({'room':urlParams.get('room'), 'email': email})
+        }
+    ).then(_ => window.location.href = 'http://localhost:8000/static/room.html');
+}
+checkout();" id="myButton" class="float-left submit-button">CHECKOUT
 </button>
 
 

@@ -96,15 +96,16 @@ def checkin(request):
 
 @csrf_exempt
 def checkout(request):
+    data = json.loads(request.body.decode('utf-8'))
     if request.method != 'POST':
         return HttpResponse(status=400)
     user_token = request.headers['Authorization']
     user_netid = User.get_netid_from_token(user_token)
-    try:
-        actualUser = User.objects.get(netid__exact=user_netid)
-    except User.DoesNotExist:
-        return HttpResponse(status=404)
-    room = PracticeRoom.objects.get(room_name__exact=request.POST['room'])
+    # try:
+    #     actualUser = User.objects.get(netid__exact=user_netid)
+    # except User.DoesNotExist:
+    #     return HttpResponse(status=404)
+    room = PracticeRoom.objects.get(room_name__exact=data['room'])
     updated_checkout = Checkin.objects.filter(room=room).order_by('-checkin_time').first()
 
     updated_checkout.checkout_time = timezone.now()
@@ -119,7 +120,7 @@ def redirect_(request, room):
         return HttpResponse(status=400)
     netid = request.POST['callback_0']
     userexist = User.objects.filter(netid=netid).exists()
-    return redirect(f"/static/checkin.html?userexist={userexist}&token={netid}&room={room}")
+    return redirect(f"/static/checkinout.html?userexist={userexist}&token={netid}&room={room}")
 
 
 @csrf_exempt
