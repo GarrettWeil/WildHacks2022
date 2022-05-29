@@ -107,11 +107,6 @@ const Map = () => {
     });
   map.setMaxBounds(bounds);
 
-// int width = 100
-// int height = 100
-// int topx = -150
-// int topy = 75
-
     map.on('load', () => {
       map.addSource('radar', {
           'type': 'image',
@@ -192,29 +187,40 @@ const Map = () => {
     // var m13 = new mapboxgl.Marker({color: "red"}).setLngLat([-28.3, -17.5]).addTo(map);
     // var m14 = new mapboxgl.Marker({color: "red"}).setLngLat([-31, -17.5]).addTo(map);
     // var m15 = new mapboxgl.Marker({color: "red"}).setLngLat([-34, -17.5]).addTo(map);
+    let netid = "u1";
+    let server = "http://localhost:8000";
+    let endpoint = "/roomapp/bulkroomstatus";
+    let rooms = Object.keys(room_to_pos);
+
+    console.log(server + endpoint);
+    fetch(server + endpoint,
+        {
+            method: 'POST',
+            // mode: 'cors',
+            cache: 'no-cache',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(rooms)
+        }
+    ).then(r => r.json()).then(result =>{
+       console.log(result)
+       for(const [roomName, time] of Object.entries(result) ) {
+           let colour = "red";
+           if (Date.parse(time) < Date.now()) {
+               colour = "green";
+           }
+           let roomLocation = room_to_pos[roomName];
 
 
-    for (var i = 0; i<positions.length;i++){
-     var marker = new mapboxgl.Marker({
-        color: check_color(pos_to_room[positions[i][0],positions[i][1]]
-           , draggable = false
-    }).setLngLat([positions[i][0],positions[i][1]]).addTo(map);
-    }
+           const popup = new mapboxgl.Popup().setHTML(
+               `Checked in <strong>${ Math.floor((Date.now() - Date.parse(time))/3600000)  }</strong> hours ago`
+           );
 
-    function check_color(room){
-      var time = new Date();
-      if time.getMonth() > cout[room]{
-        return "green"
-      } else if time.getDay()>cout[room]{
-        return "green"
-      } else if time.getHour()>cout[room]{
-        return "green"
-      } else if time.getMinute()>cout[room]{
-        return "green"
-      } else {
-        return "red"
-      }
-    }
+           let marker = new mapboxgl.Marker({
+               color: colour, draggable: false
+           }).setLngLat([roomLocation[0], roomLocation[1]]).setPopup(popup).addTo(map);
+       }
+
+    });
     // Clean up on unmount
     return () => map.remove();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

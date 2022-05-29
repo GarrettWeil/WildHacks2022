@@ -2,7 +2,7 @@ from django.db.models import Max
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import User
 from .models import Checkin, PracticeRoom
 from datetime import datetime, timedelta
@@ -75,7 +75,7 @@ def checkin(request):
     except User.DoesNotExist:
         return HttpResponse(status=404)
 
-    checkin_period = 24
+    checkin_period = 4
 
     room = PracticeRoom.objects.get(room_name__exact=request.POST['room'])
     last_checkout = Checkin.objects.filter(room=room).order_by('-checkout_time').first()
@@ -121,17 +121,29 @@ def login(request):
 
 @csrf_exempt
 def bulk_room_status(request):
+
     rooms_raw = request.body.decode('utf-8')
     rooms = json.loads(rooms_raw)
     practiceRooms = PracticeRoom.objects.filter(room_name__in=rooms)
     checkins = Checkin.objects.values("room__room_name").annotate(time=Max('checkout_time'))
     room_status = {}
     for room in rooms:
-        room_status[room] = 'NeverBooked'
+        room_status[room] = datetime(2002, 5,11)
     for checkin in checkins:
         room_status[checkin['room__room_name']] = checkin['time']
-    from django.core.serializers.json import DjangoJSONEncoder
-    return HttpResponse(json.dumps(room_status, cls=DjangoJSONEncoder))
+
+    response = JsonResponse(
+        room_status
+    )
+    # response.headers["Access-Control-Allow-Origin"] = "*"
+    # response.headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+    # response.headers["Access-Control-Max-Age"] = "1000"
+    # response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+    return response
+
+    # from django.core.serializers.json import DjangoJSONEncoder
+    # print(json.dumps(room_status, cls=DjangoJSONEncoder))
+    # return HttpResponse('{"room1": "2022-05-30T00:10:02.310Z", "room2": "2022-05-30T00:10:24.552Z", "room3": "2022-05-30T00:10:33.491Z", "room4": "NeverBooked", "room5": "NeverBooked", "room6": "NeverBooked", "room7": "NeverBooked", "room8": "NeverBooked", "room9": "NeverBooked", "room10": "NeverBooked", "room11": "NeverBooked", "room12": "NeverBooked", "room13": "NeverBooked", "room14": "NeverBooked", "room15": "NeverBooked", "room16": "NeverBooked", "room17": "NeverBooked", "room18": "NeverBooked", "room19": "NeverBooked", "room20": "NeverBooked", "room21": "NeverBooked", "room22": "NeverBooked", "room23": "NeverBooked", "room24": "NeverBooked", "room25": "NeverBooked"}')
 
 
 
